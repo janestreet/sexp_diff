@@ -1,4 +1,4 @@
-open Core_kernel
+open Core
 module U = Display_util_internal
 
 module Display_options = struct

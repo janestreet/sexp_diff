@@ -1,4 +1,4 @@
-open Core_kernel
+open Core
 
 (** We define a cost function, then find the diff which minimizes this cost
     function. Hopefully our cost function is similar to what a human perceives

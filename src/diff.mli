@@ -1,4 +1,4 @@
-open Core_kernel
+open Core
 
 (** This type is intended to be used by OCaml code to produce a visual representation
     of the diff. If you want to display this diff, take a look at [Sexp_diff_display].

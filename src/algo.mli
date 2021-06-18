@@ -1,4 +1,4 @@
-open Core_kernel
+open Core
 
 (** This module can be used for computing the diff of two sexps.
     It can identify insertion, deletion, and modification anywhere in the sexp.
