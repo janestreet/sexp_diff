@@ -192,9 +192,8 @@ let hide_lines ~display_options lines =
     List.map combined ~f:(fun lines ->
       let lines = List.map lines ~f:(fun x -> Hideable_line_pair.Line_pair x) in
       let num_shown = Display_options.num_shown display_options in
-      if
-        List.length lines >= Display_options.collapse_threshold display_options
-        && (num_shown * 2) + 1 < List.length lines
+      if List.length lines >= Display_options.collapse_threshold display_options
+      && (num_shown * 2) + 1 < List.length lines
       then (
         let start = List.take lines num_shown in
         let end_ = List.rev (List.take (List.rev lines) num_shown) in
