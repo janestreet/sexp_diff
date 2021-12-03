@@ -1,2 +1,2 @@
-(library (name sexp_diff) (libraries core_kernel.core)
- (public_name sexp_diff) (preprocess (pps ppx_jane)))
+(library (name sexp_diff) (libraries core) (public_name sexp_diff)
+ (preprocess (pps ppx_jane)))
