@@ -75,11 +75,41 @@ module Display_options = struct
     }
   [@@deriving sexp_of, fields]
 
-  let create ?(collapse_threshold = 10) ?(num_shown = 3) () =
+  module Defaults = struct
+    let collapse_threshold = 10
+    let num_shown = 3
+  end
+
+  let create
+        ?(collapse_threshold = Defaults.collapse_threshold)
+        ?(num_shown = Defaults.num_shown)
+        ()
+    =
     Fields.create ~collapse_threshold ~num_shown
   ;;
 
   let default = create ()
+
+  let param =
+    let%map_open.Command collapse_threshold =
+      flag_optional_with_default_doc
+        ~aliases:[ "u" ]
+        "-unified"
+        int
+        [%sexp_of: int]
+        ~default:Defaults.collapse_threshold
+        ~doc:"NUM lines of unified context"
+    and num_shown =
+      flag_optional_with_default_doc
+        ~aliases:[ "c" ]
+        "-context"
+        int
+        [%sexp_of: int]
+        ~default:Defaults.num_shown
+        ~doc:"NUM lines of copied context"
+    in
+    create ~collapse_threshold ~num_shown ()
+  ;;
 end
 
 module Line_pair = struct

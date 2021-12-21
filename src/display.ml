@@ -7,6 +7,17 @@ module Display_options = struct
       | Single_column
       | Two_column
     [@@deriving compare, enumerate, sexp_of]
+
+    let param =
+      let%map_open.Command side_by_side =
+        flag
+          ~aliases:[ "-y" ]
+          "-side-by-side"
+          (no_arg_some Two_column)
+          ~doc:"output in two columns"
+      in
+      Option.value side_by_side ~default:Single_column
+    ;;
   end
 
   type t =
@@ -19,6 +30,12 @@ module Display_options = struct
     { internal_options = U.Display_options.create ?collapse_threshold ?num_shown ()
     ; layout
     }
+  ;;
+
+  let param =
+    let%map_open.Command layout = Layout.param
+    and internal_options = U.Display_options.param in
+    { internal_options; layout }
   ;;
 end
 

@@ -1,9 +1,14 @@
+open Core
+
 module Display_options : sig
   module Layout : sig
     type t =
       | Single_column
       | Two_column
     [@@deriving compare, enumerate, sexp_of]
+
+    (** flags compatible with `man diff` *)
+    val param : t Command.Param.t
   end
 
   type t [@@deriving sexp_of]
@@ -12,6 +17,9 @@ module Display_options : sig
       we collapse them and only show the first [num_shown] and the last [num_shown] of
       these lines. *)
   val create : ?collapse_threshold:int -> ?num_shown:int -> Layout.t -> t
+
+  (** flags compatible with `man diff` *)
+  val param : t Command.Param.t
 end
 
 (** [display_as_plain_string] displays the diff as a string.  Here is a possible output of

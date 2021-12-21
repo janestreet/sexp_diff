@@ -1,3 +1,5 @@
+open Core
+
 (** Expose display helpers for use by the incr_dom-friendly library "sexp_diff" *)
 module Color : sig
   type t =
@@ -31,6 +33,9 @@ module Display_options : sig
 
   val create : ?collapse_threshold:int -> ?num_shown:int -> unit -> t
   val default : t
+
+  (** flags compatible with `man diff` *)
+  val param : t Command.Param.t
 end
 
 module Line_pair : sig
