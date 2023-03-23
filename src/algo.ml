@@ -255,9 +255,7 @@ let rec solve ~cache ~original ~updated : AChange.t =
     else (
       let simple_change = AChange.Replace (original, updated) in
       let complex_solution =
-        match
-          Interned_sexp.unpack_lists ~table:interned_sexp_table original updated
-        with
+        match Interned_sexp.unpack_lists ~table:interned_sexp_table original updated with
         | None -> Solution.of_change simple_change ~cost
         | Some (original, updated) ->
           let original = Array.of_list original in
@@ -287,10 +285,7 @@ let rec solve ~cache ~original ~updated : AChange.t =
                 then
                   Solution.min
                     s
-                    (Solution.cons
-                       ~cost
-                       (AChange.Add updated.(j))
-                       solutions.(i).(j + 1))
+                    (Solution.cons ~cost (AChange.Add updated.(j)) solutions.(i).(j + 1))
                 else s
               in
               let s =
