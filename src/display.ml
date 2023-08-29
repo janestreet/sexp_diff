@@ -24,7 +24,7 @@ module Display_options = struct
     { layout : Layout.t
     ; internal_options : U.Display_options.t
     }
-  [@@deriving fields, sexp_of]
+  [@@deriving fields ~getters, sexp_of]
 
   let create ?collapse_threshold ?num_shown layout =
     { internal_options = U.Display_options.create ?collapse_threshold ?num_shown ()

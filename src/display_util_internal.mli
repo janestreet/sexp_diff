@@ -16,7 +16,7 @@ module Line : sig
     { color : Color.t
     ; content : string
     }
-  [@@deriving fields, sexp_of]
+  [@@deriving sexp_of]
 
   val to_text
     :  green:(string -> 'a)

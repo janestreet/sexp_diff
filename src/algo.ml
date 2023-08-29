@@ -65,7 +65,7 @@ end = struct
         { repr : Repr.t
         ; size : int
         }
-      [@@deriving fields]
+      [@@deriving fields ~getters ~iterators:create]
     end
 
     type t =
@@ -186,7 +186,6 @@ module Solution = struct
       { cost : int
       ; changes : AChange.t list
       }
-    [@@deriving fields]
   end
 
   type t =
@@ -232,7 +231,7 @@ module Cache = struct
     { interned_sexp_table : Interned_sexp.Table.t
     ; memo_cache : AChange.t Memo_key.Table.t
     }
-  [@@deriving fields]
+  [@@deriving fields ~getters]
 
   let create () =
     { interned_sexp_table = Interned_sexp.Table.create ()

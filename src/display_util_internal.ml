@@ -15,7 +15,7 @@ module Line = struct
     { color : Color.t
     ; content : string
     }
-  [@@deriving fields, sexp_of]
+  [@@deriving sexp_of]
 
   let empty = { color = Color.Plain; content = "" }
 
@@ -73,7 +73,7 @@ module Display_options = struct
     { collapse_threshold : int
     ; num_shown : int
     }
-  [@@deriving sexp_of, fields]
+  [@@deriving sexp_of, fields ~getters ~iterators:create]
 
   module Defaults = struct
     let collapse_threshold = 10
