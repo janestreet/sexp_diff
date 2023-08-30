@@ -61,9 +61,9 @@ val display_with_ansi_colors : Display_options.t -> Diff.t -> string
 val two_column_display_as_list
   :  ?display_options:Display_util_internal.Display_options.t
   -> Diff.t
-  (** A single string spanning both columns. [width] is the width of the display. *)
+     (** A single string spanning both columns. [width] is the width of the display. *)
   -> on_full_width_message:(string -> width:int -> 'a)
-  (** A line with a piece in the left column and a piece in the right column.
+       (** A line with a piece in the left column and a piece in the right column.
 
       [left_padding] is whitespace to append after [left] to make up the full width of
       the left column. Similarly, [right_padding] after [right]. *)

@@ -81,9 +81,9 @@ module Display_options = struct
   end
 
   let create
-        ?(collapse_threshold = Defaults.collapse_threshold)
-        ?(num_shown = Defaults.num_shown)
-        ()
+    ?(collapse_threshold = Defaults.collapse_threshold)
+    ?(num_shown = Defaults.num_shown)
+    ()
     =
     Fields.create ~collapse_threshold ~num_shown
   ;;
@@ -223,7 +223,7 @@ let hide_lines ~display_options lines =
       let lines = List.map lines ~f:(fun x -> Hideable_line_pair.Line_pair x) in
       let num_shown = Display_options.num_shown display_options in
       if List.length lines >= Display_options.collapse_threshold display_options
-      && (num_shown * 2) + 1 < List.length lines
+         && (num_shown * 2) + 1 < List.length lines
       then (
         let start = List.take lines num_shown in
         let end_ = List.rev (List.take (List.rev lines) num_shown) in

@@ -77,11 +77,11 @@ let center s ~width =
 let list_max l ~f = List.fold l ~init:0 ~f:(fun best x -> Int.max best (f x))
 
 let display_single_column_as_string_with_custom_formatting
-      ?display_options
-      diff
-      ~green
-      ~red
-      ~plain
+  ?display_options
+  diff
+  ~green
+  ~red
+  ~plain
   =
   let lines = U.hideable_line_pairs ?display_options diff in
   let to_text = U.Line.to_text ~green ~plain ~red in
@@ -103,11 +103,11 @@ let display_single_column_as_string_with_custom_formatting
 ;;
 
 let display_two_column_as_string_with_custom_formatting
-      ?display_options
-      diff
-      ~green
-      ~red
-      ~plain
+  ?display_options
+  diff
+  ~green
+  ~red
+  ~plain
   =
   let on_line_pair ~left ~right ~left_padding ~right_padding =
     [ U.Line.to_text ~green ~red ~plain left
