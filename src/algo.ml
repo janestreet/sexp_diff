@@ -1,18 +1,15 @@
 open Core
 
-(** We define a cost function, then find the diff which minimizes this cost
-    function. Hopefully our cost function is similar to what a human perceives
-    as a "good" diff. For example, we consider marking sections as the same
-    to have a low cost.
-*)
+(** We define a cost function, then find the diff which minimizes this cost function.
+    Hopefully our cost function is similar to what a human perceives as a "good" diff. For
+    example, we consider marking sections as the same to have a low cost. *)
 
-(** [cost_per_discrete_change] is an important tuning parameter.
-    When you increase the value of this parameter, you make the algorithm
-    less likely to break a change up into a sequence of smaller changes.
+(** [cost_per_discrete_change] is an important tuning parameter. When you increase the
+    value of this parameter, you make the algorithm less likely to break a change up into
+    a sequence of smaller changes.
 
-    In the extreme case, when this parameter goes to infinity, the algorithm
-    will always produce the trivial answer [Replace (original, updated)],
-*)
+    In the extreme case, when this parameter goes to infinity, the algorithm will always
+    produce the trivial answer [Replace (original, updated)], *)
 let cost_per_discrete_change = 1
 
 (** The penalty for each [Enclose]. This probably doesn't need to be changed. *)
