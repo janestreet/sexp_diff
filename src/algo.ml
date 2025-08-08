@@ -53,7 +53,7 @@ end = struct
     end
 
     include T
-    include Hashable.Make (T)
+    include Hashable.Make [@modality portable] (T)
   end
 
   module Table = struct
@@ -221,7 +221,7 @@ module Cache = struct
     end
 
     include T
-    include Hashable.Make (T)
+    include Hashable.Make [@modality portable] (T)
   end
 
   type t =
