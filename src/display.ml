@@ -26,8 +26,13 @@ module Display_options = struct
     }
   [@@deriving fields ~getters, sexp_of]
 
-  let create ?collapse_threshold ?num_shown layout =
-    { internal_options = U.Display_options.create ?collapse_threshold ?num_shown ()
+  let create ?collapse_threshold ?include_num_unchanged_lines ?num_shown layout =
+    { internal_options =
+        U.Display_options.create
+          ?collapse_threshold
+          ?include_num_unchanged_lines
+          ?num_shown
+          ()
     ; layout
     }
   ;;
@@ -39,7 +44,12 @@ module Display_options = struct
   ;;
 end
 
-let hide_message ~num_hidden = sprintf "...%d unchanged lines..." num_hidden
+let hide_message ~num_hidden =
+  match num_hidden with
+  | Some num_hidden -> sprintf "...%d unchanged lines..." num_hidden
+  | None -> "...unchanged lines..."
+;;
+
 let all_hidden_message = "(no changes)"
 
 let two_column_display_as_list ?display_options diff ~on_full_width_message ~on_line_pair =

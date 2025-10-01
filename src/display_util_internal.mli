@@ -31,7 +31,13 @@ end
 module Display_options : sig
   type t [@@deriving sexp_of]
 
-  val create : ?collapse_threshold:int -> ?num_shown:int -> unit -> t
+  val create
+    :  ?collapse_threshold:int
+    -> ?include_num_unchanged_lines:bool
+    -> ?num_shown:int
+    -> unit
+    -> t
+
   val default : t
 
   (** flags compatible with `man diff` *)
@@ -50,7 +56,7 @@ end
 module Hideable_line_pair : sig
   type t =
     | Line_pair of Line_pair.t
-    | Hidden of int
+    | Hidden of int option
     | All_hidden
 end
 

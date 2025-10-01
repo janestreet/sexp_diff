@@ -15,8 +15,14 @@ module Display_options : sig
 
   (** Whenever there is a sequence of [collapse_threshold] or more unchanged lines, we
       collapse them and only show the first [num_shown] and the last [num_shown] of these
-      lines. *)
-  val create : ?collapse_threshold:int -> ?num_shown:int -> Layout.t -> t
+      lines. If [include_num_unchanged_lines] (default true), output how many lines were
+      skipped. *)
+  val create
+    :  ?collapse_threshold:int
+    -> ?include_num_unchanged_lines:bool
+    -> ?num_shown:int
+    -> Layout.t
+    -> t
 
   (** flags compatible with `man diff` *)
   val param : t Command.Param.t
