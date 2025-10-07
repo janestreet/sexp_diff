@@ -71,21 +71,24 @@ end
 module Display_options = struct
   type t =
     { collapse_threshold : int
+    ; include_num_unchanged_lines : bool
     ; num_shown : int
     }
   [@@deriving sexp_of, fields ~getters ~iterators:create]
 
   module Defaults = struct
     let collapse_threshold = 10
+    let include_num_unchanged_lines = true
     let num_shown = 3
   end
 
   let create
     ?(collapse_threshold = Defaults.collapse_threshold)
+    ?(include_num_unchanged_lines = Defaults.include_num_unchanged_lines)
     ?(num_shown = Defaults.num_shown)
     ()
     =
-    Fields.create ~collapse_threshold ~num_shown
+    Fields.create ~collapse_threshold ~include_num_unchanged_lines ~num_shown
   ;;
 
   let default = create ()
@@ -99,6 +102,11 @@ module Display_options = struct
         [%sexp_of: int]
         ~default:Defaults.collapse_threshold
         ~doc:"NUM lines of unified context"
+    and hide_num_unchanged_lines =
+      flag
+        [%var_dash_name]
+        no_arg
+        ~doc:"Hide the number of unchanged lines when collapsing"
     and num_shown =
       flag_optional_with_default_doc
         ~aliases:[ "c" ]
@@ -108,7 +116,11 @@ module Display_options = struct
         ~default:Defaults.num_shown
         ~doc:"NUM lines of copied context"
     in
-    create ~collapse_threshold ~num_shown ()
+    create
+      ~collapse_threshold
+      ~include_num_unchanged_lines:(not hide_num_unchanged_lines)
+      ~num_shown
+      ()
   ;;
 end
 
@@ -136,7 +148,7 @@ end
 module Hideable_line_pair = struct
   type t =
     | Line_pair of Line_pair.t
-    | Hidden of int
+    | Hidden of int option
     | All_hidden
 end
 
@@ -227,8 +239,15 @@ let hide_lines ~display_options lines =
       then (
         let start = List.take lines num_shown in
         let end_ = List.rev (List.take (List.rev lines) num_shown) in
-        let num_hidden = List.length lines - List.length start - List.length end_ in
-        start @ [ Hideable_line_pair.Hidden num_hidden ] @ end_)
+        let hidden_line =
+          let num_hidden =
+            if display_options.include_num_unchanged_lines
+            then Some (List.length lines - List.length start - List.length end_)
+            else None
+          in
+          Hideable_line_pair.Hidden num_hidden
+        in
+        start @ [ hidden_line ] @ end_)
       else lines)
     |> List.concat)
 ;;

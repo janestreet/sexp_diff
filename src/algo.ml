@@ -1,18 +1,15 @@
 open Core
 
-(** We define a cost function, then find the diff which minimizes this cost
-    function. Hopefully our cost function is similar to what a human perceives
-    as a "good" diff. For example, we consider marking sections as the same
-    to have a low cost.
-*)
+(** We define a cost function, then find the diff which minimizes this cost function.
+    Hopefully our cost function is similar to what a human perceives as a "good" diff. For
+    example, we consider marking sections as the same to have a low cost. *)
 
-(** [cost_per_discrete_change] is an important tuning parameter.
-    When you increase the value of this parameter, you make the algorithm
-    less likely to break a change up into a sequence of smaller changes.
+(** [cost_per_discrete_change] is an important tuning parameter. When you increase the
+    value of this parameter, you make the algorithm less likely to break a change up into
+    a sequence of smaller changes.
 
-    In the extreme case, when this parameter goes to infinity, the algorithm
-    will always produce the trivial answer [Replace (original, updated)],
-*)
+    In the extreme case, when this parameter goes to infinity, the algorithm will always
+    produce the trivial answer [Replace (original, updated)], *)
 let cost_per_discrete_change = 1
 
 (** The penalty for each [Enclose]. This probably doesn't need to be changed. *)
@@ -30,14 +27,14 @@ let enclose_penalty = 2
 
    We call such an index an [Interned_sexp] and the table an [Interned_sexp.Table].
 *)
-module Interned_sexp : sig
+module Interned_sexp : sig @@ portable
   module Table : sig
     type t
 
     val create : unit -> t
   end
 
-  type t [@@deriving hash, compare, sexp]
+  type t : immutable_data [@@deriving hash, compare, sexp]
 
   val equal : t -> t -> bool
   val of_sexp : table:Table.t -> Sexp.t -> t
@@ -56,7 +53,7 @@ end = struct
     end
 
     include T
-    include Hashable.Make (T)
+    include Hashable.Make [@modality portable] (T)
   end
 
   module Table = struct
@@ -224,7 +221,7 @@ module Cache = struct
     end
 
     include T
-    include Hashable.Make (T)
+    include Hashable.Make [@modality portable] (T)
   end
 
   type t =
