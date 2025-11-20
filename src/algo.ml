@@ -17,12 +17,12 @@ let enclose_penalty = 2
 
 (* We want to compare two sexps for equality in O(1), so we flatten them out into a table
    whose indices are in one-to-one correspondence with all sub-expressions of the two
-   sexps.  Then we compare indices rather than sexps.  The table also supports converting
-   an index back into the corresponding sexp.  This technique is called Hash Consing or
+   sexps. Then we compare indices rather than sexps. The table also supports converting an
+   index back into the corresponding sexp. This technique is called Hash Consing or
    Interning.
 
    In our case, the table also stores the "size" of each sexp, measured as the number of
-   [List] and [Atom] constructors it contains.  These sizes are used to compute the diff
+   [List] and [Atom] constructors it contains. These sizes are used to compute the diff
    algorithm's cost function.
 
    We call such an index an [Interned_sexp] and the table an [Interned_sexp.Table].
