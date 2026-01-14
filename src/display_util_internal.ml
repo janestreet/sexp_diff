@@ -95,7 +95,7 @@ module Display_options = struct
 
   let param =
     let%map_open.Command collapse_threshold =
-      flag_optional_with_default_doc
+      flag_optional_with_default_doc_sexp
         ~aliases:[ "u" ]
         "-unified"
         int
@@ -108,7 +108,7 @@ module Display_options = struct
         no_arg
         ~doc:"Hide the number of unchanged lines when collapsing"
     and num_shown =
-      flag_optional_with_default_doc
+      flag_optional_with_default_doc_sexp
         ~aliases:[ "c" ]
         "-context"
         int
