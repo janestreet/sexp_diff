@@ -5,7 +5,7 @@ module Display_options : sig
     type t =
       | Single_column
       | Two_column
-    [@@deriving compare, enumerate, sexp_of]
+    [@@deriving compare ~localize, enumerate, sexp_of]
 
     (** flags compatible with `man diff` *)
     val param : t Command.Param.t

@@ -5,9 +5,9 @@ module Color = struct
     | Red
     | Green
     | Plain
-  [@@deriving sexp_of, compare]
+  [@@deriving sexp_of, compare ~localize]
 
-  let equal = [%compare.equal: t]
+  let%template equal = ([%compare.equal: t] [@mode local])
 end
 
 module Line = struct

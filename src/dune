@@ -3,4 +3,4 @@
  (libraries core)
  (public_name sexp_diff)
  (preprocess
-  (pps ppx_jane)))
+  (pps ppx_jane -compare-require-explicit-locality)))
