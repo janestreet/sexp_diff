@@ -6,7 +6,7 @@ type t =
   | Delete of Sexp.t
   | Replace of Sexp.t * Sexp.t
   | Enclose of t list
-[@@deriving sexp, hash, compare]
+[@@deriving sexp, hash, compare ~localize]
 
 let print_for_test t = print_s (sexp_of_t t)
 

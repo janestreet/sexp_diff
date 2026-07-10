@@ -8,7 +8,7 @@ type t =
   | Delete of Sexp.t
   | Replace of Sexp.t * Sexp.t
   | Enclose of t list
-[@@deriving sexp, hash, compare]
+[@@deriving sexp, hash, compare ~localize]
 
 val invert : t -> t
 val apply : t -> Sexp.t -> Sexp.t Or_error.t

@@ -8,7 +8,7 @@ module Color : sig
     | Red
     | Green
     | Plain
-  [@@deriving sexp_of, compare]
+  [@@deriving sexp_of, compare ~localize]
 
   val equal : t -> t -> bool
 end

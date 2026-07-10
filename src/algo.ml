@@ -34,7 +34,7 @@ module Interned_sexp : sig @@ portable
     val create : unit -> t
   end
 
-  type t : immutable_data [@@deriving hash, compare, sexp]
+  type t : immutable_data [@@deriving hash, compare ~localize, sexp]
 
   val equal : t -> t -> bool
   val of_sexp : table:Table.t -> Sexp.t -> t
@@ -42,14 +42,14 @@ module Interned_sexp : sig @@ portable
   val size : table:Table.t -> t -> int
   val unpack_lists : table:Table.t -> t -> t -> (t list * t list) option
 end = struct
-  type t = int [@@deriving hash, compare, sexp]
+  type t = int [@@deriving hash, compare ~localize, sexp]
 
   module Repr = struct
     module T = struct
       type nonrec t =
         | Atom of string
         | List of t list
-      [@@deriving hash, compare, sexp]
+      [@@deriving hash, compare ~localize, sexp]
     end
 
     include T
@@ -217,7 +217,8 @@ end
 module Cache = struct
   module Memo_key = struct
     module T = struct
-      type t = Interned_sexp.t * Interned_sexp.t [@@deriving compare, hash, sexp]
+      type t = Interned_sexp.t * Interned_sexp.t
+      [@@deriving compare ~localize, hash, sexp]
     end
 
     include T

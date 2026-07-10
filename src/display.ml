@@ -6,7 +6,7 @@ module Display_options = struct
     type t =
       | Single_column
       | Two_column
-    [@@deriving compare, enumerate, sexp_of]
+    [@@deriving compare ~localize, enumerate, sexp_of]
 
     let param =
       let%map_open.Command side_by_side =
